@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+    <title>Qualm AI | Decision Stress-Test Chatbot</title>
+    <!-- Tailwind with forms and container queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "cream": "#FDFCF0",
+                        "charcoal": "#1A1A1A",
+                        "stone": "#4A4A4A",
+                        "primary": "#1A1A1A", // Solid Charcoal Accent
+                        "primary-dark": "#0d0d0d",
+                        "primary-light": "#333333",
+                        "border-muted": "#E5E4D7",
+                        "surface": "#FDFCF0" // Cream Surface
+                    },
+                    fontFamily: {
+                        "serif": ["Playfair Display", "serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Identity Services (OAuth Client) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="min-h-screen text-charcoal font-sans relative selection:bg-charcoal selection:text-cream flex flex-col justify-between overflow-x-hidden">
+    
+    <!-- Ambient Background Glows -->
+    <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden bg-[#FDFCF0]">
+        <div class="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#d97706]/3 blur-[130px]"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#d97706]/2 blur-[120px]"></div>
+    </div>
+
+    <!-- 1. LOGIN SECTION -->
+    <section id="login-section" class="flex-grow flex flex-col justify-between">
+        <!-- Minimal Header -->
+        <header class="w-full py-8 px-8 flex justify-center md:justify-start">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-2xl">smart_toy</span>
+                <span class="serif-heading text-2xl font-bold tracking-tight text-primary font-serif">Qualm AI</span>
+            </div>
+        </header>
+
+        <main class="flex-grow flex items-center justify-center px-6 py-8">
+            <div class="w-full max-w-[400px]">
+                <!-- Branding & Copy -->
+                <div class="mb-10 text-center md:text-left">
+                    <h1 id="login-title" class="serif-heading text-4xl mb-4 text-primary font-serif">Welcome Back</h1>
+                    <p class="text-stone leading-relaxed font-light text-sm">
+                        Qualm AI doesn't tell you what to do. It makes you sure of what you actually think.
+                    </p>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-6" onsubmit="handleFormLogin(event)">
+                    <div id="username-container" class="space-y-2 hidden">
+                        <label class="text-[10px] font-semibold uppercase tracking-widest text-stone" for="username">Username</label>
+                        <input class="w-full bg-transparent border-0 border-b border-primary/20 py-3 px-0 focus:border-primary transition-colors duration-300 text-charcoal placeholder:text-stone/40" id="username" placeholder="Alex Woodward" type="text"/>
+                        <p id="username-error" class="text-xs text-red-500 hidden mt-1">Please enter a username.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-semibold uppercase tracking-widest text-stone" for="email">Email Address</label>
+                        <input class="w-full bg-transparent border-0 border-b border-primary/20 py-3 px-0 focus:border-primary transition-colors duration-300 text-charcoal placeholder:text-stone/40" id="email" placeholder="name@company.com" type="email"/>
+                        <p id="email-error" class="text-xs text-red-500 hidden mt-1">Please enter a valid email address.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-semibold uppercase tracking-widest text-stone" for="password">Password</label>
+                        <input class="w-full bg-transparent border-0 border-b border-primary/20 py-3 px-0 focus:border-primary transition-colors duration-300 text-charcoal placeholder:text-stone/40" id="password" placeholder="••••••••" type="password"/>
+                        <p id="password-error" class="text-xs text-red-500 hidden mt-1">Password must be at least 6 characters long.</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between py-1">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input class="w-4 h-4 border-primary/20 bg-transparent rounded-none text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+                            <span class="text-xs text-stone group-hover:text-charcoal transition-colors">Remember me</span>
+                        </label>
+                        <a class="text-xs text-primary font-medium hover:underline transition-all underline-offset-4" href="#">Forgot password?</a>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="pt-2 space-y-4">
+                        <button type="submit" class="w-full py-4 bg-primary text-cream font-semibold tracking-wide btn-transition hover:bg-stone active:scale-[0.98] flex items-center justify-center gap-2 rounded">
+                            <span id="login-submit-text">Login</span>
+                            <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                        </button>
+                        <div class="relative flex items-center py-2">
+                            <div class="flex-grow border-t border-primary/10"></div>
+                            <span class="flex-shrink mx-4 text-[10px] font-bold uppercase tracking-[0.2em] text-stone/40">or</span>
+                            <div class="flex-grow border-t border-primary/10"></div>
+                        </div>
+                        <button type="button" onclick="openGoogleModal()" class="w-full py-4 border border-primary text-primary font-semibold tracking-wide btn-transition hover:bg-primary hover:text-cream active:scale-[0.98] flex items-center justify-center gap-3 rounded">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="currentColor"></path>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path>
+                            </svg>
+                            Continue with Google
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Footer Link -->
+                <p class="mt-10 text-center text-xs text-stone">
+                    Don't have an account? <a id="toggle-auth-mode" onclick="toggleAuthMode(event)" class="text-primary font-semibold hover:underline underline-offset-4 cursor-pointer">Create an account</a>
+                </p>
+            </div>
+        </main>
+        
+        <!-- Simple Footer -->
+        <footer class="w-full py-8 px-8 flex flex-col items-center gap-4">
+            <p class="text-[10px] font-medium tracking-[0.15em] text-stone/50 uppercase">© 2026 Qualm AI • Ethereal Intelligence</p>
+            <div class="flex gap-6">
+                <a class="text-xs text-stone hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Privacy</a>
+                <a class="text-xs text-stone hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Terms</a>
+            </div>
+        </footer>
+    </section>
+
+    <!-- 2. MAIN CHAT & DASHBOARD SECTION (Hidden by default) -->
+    <section id="chat-section" class="flex-grow flex flex-col justify-between hidden">
+        <!-- TopAppBar Anchor -->
+        <header class="fixed top-0 left-0 w-full z-40 bg-cream/80 backdrop-blur-xl border-b border-charcoal/10 h-20 flex items-center justify-between px-6 md:px-12">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors text-primary">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="serif-heading text-2xl md:text-3xl font-bold tracking-tight text-primary font-serif">Qualm</h1>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-6 mr-6">
+                    <span onclick="openMemoir()" class="text-[10px] font-semibold tracking-wider text-stone hover:text-primary cursor-pointer transition-colors">MEMOIR</span>
+                    <span onclick="openAnalytics()" class="text-[10px] font-semibold tracking-wider text-stone hover:text-primary cursor-pointer transition-colors">ANALYTICS</span>
+                </div>
+                
+                <button onclick="openSettingsModal()" class="w-10 h-10 rounded-full bg-surface border border-charcoal/10 flex items-center justify-center overflow-hidden transition-transform hover:scale-105 active:scale-95">
+                    <img id="header-avatar" class="w-full h-full object-cover" src="" alt="Profile">
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow pt-24 pb-36 max-w-4xl w-full mx-auto px-4 md:px-6">
+            <!-- Hero Initial State -->
+            <div id="initial-state" class="py-12 md:py-16 text-center transition-all duration-500">
+                <h2 id="greeting-text" class="text-4xl md:text-5xl text-primary mb-4 tracking-tight font-serif italic">Good evening.</h2>
+                <p class="text-stone font-sans max-w-xl mx-auto text-sm leading-relaxed">
+                    Qualm AI is a decision stress-testing engine. Describe the decision you're facing (e.g. career changes, investments, relocations) to begin.
+                </p>
+                
+                <!-- Suggested Prompts Grid -->
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    <button onclick="selectSuggestedPrompt('Analyze this decision', 'Review tactical variables for the Q4 expansion strategy.')" class="glass-panel p-6 rounded-2xl text-left hover:bg-charcoal/5 transition-all group border-charcoal/10 flex flex-col justify-between">
+                        <div>
+                            <span class="material-symbols-outlined text-primary mb-3 block group-hover:scale-110 transition-transform">insights</span>
+                            <p class="text-sm font-semibold text-charcoal mb-1">Analyze this decision</p>
+                            <p class="text-xs text-stone opacity-80">Review tactical variables for the Q4 expansion strategy.</p>
+                        </div>
+                    </button>
+                    <button onclick="selectSuggestedPrompt('Summarize recent insights', 'Synthesize key themes from the last three strategic meetings.')" class="glass-panel p-6 rounded-2xl text-left hover:bg-charcoal/5 transition-all group border-charcoal/10 flex flex-col justify-between">
+                        <div>
+                            <span class="material-symbols-outlined text-primary mb-3 block group-hover:scale-110 transition-transform">auto_stories</span>
+                            <p class="text-sm font-semibold text-charcoal mb-1">Summarize recent insights</p>
+                            <p class="text-xs text-stone opacity-80">Synthesize key themes from the last three strategic meetings.</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat History Area -->
+            <div id="chat-messages" class="chat-container space-y-6 pb-12 hidden">
+                <!-- Message items will be loaded dynamically by JS -->
+            </div>
+        </main>
+
+        <!-- Bottom Action Panel -->
+        <div class="fixed bottom-0 left-0 w-full z-30 px-4 pb-6 md:pb-8 pointer-events-none">
+            <div class="max-w-3xl mx-auto w-full pointer-events-auto">
+                <!-- Visual countdown bar for Step 7 (Pressure Simulator) -->
+                <div id="pressure-timer-bar-container" class="hidden w-full h-1 bg-charcoal/10 rounded-t-lg overflow-hidden border-t border-x border-charcoal/10">
+                    <div id="pressure-timer-bar" class="h-full bg-primary transition-all duration-1000 ease-linear" style="width: 100%;"></div>
+                </div>
+
+                <div class="glass-panel rounded-2xl shadow-2xl p-2 flex flex-col gap-2 border-charcoal/10 bg-cream/90">
+                    <!-- Step 5 Depth Slider Control -->
+                    <div id="depth-slider-container" class="hidden flex flex-col gap-3 px-4 py-3 bg-[#E5E4D7]/50 border border-charcoal/10 rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-primary">Select Socratic Challenge Depth</span>
+                            <span id="slider-label" class="text-xs font-bold text-charcoal bg-charcoal/10 border border-charcoal/30 px-2.5 py-0.5 rounded-full">Medium</span>
+                        </div>
+                        <input type="range" id="depth-slider" min="1" max="3" value="2" class="w-full accent-primary bg-stone/20 h-1 rounded-lg cursor-pointer" oninput="updateSliderLabel(this.value)">
+                        <div class="flex justify-between text-[10px] text-stone font-bold uppercase tracking-wider">
+                            <span>Gentle</span>
+                            <span>Medium</span>
+                            <span>Brutal</span>
+                        </div>
+                        <button onclick="lockDepthSlider()" class="w-full py-2.5 mt-2 bg-charcoal hover:bg-stone text-cream font-semibold text-xs uppercase tracking-wider transition-colors rounded-xl">
+                            Lock Challenge Tone
+                        </button>
+                    </div>
+
+                    <!-- Input message box controls -->
+                    <div id="message-controls-container" class="flex items-end gap-2 px-2 py-1">
+                        <!-- Hidden File Input -->
+                        <input type="file" id="file-input" class="hidden" onchange="handleFileSelected(event)">
+                        
+                        <button onclick="triggerFileInput()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-charcoal/10 transition-colors text-stone hover:text-primary" title="Attach Document">
+                            <span class="material-symbols-outlined">attach_file</span>
+                        </button>
+                        
+                        <textarea id="chat-input" class="flex-1 bg-transparent border-none focus:ring-0 text-charcoal font-sans resize-none py-2 placeholder:text-stone/40 text-sm" placeholder="Awaiting decision outline..." rows="1" onkeydown="handleKeyPress(event)"></textarea>
+                        
+                        <button onclick="sendMessage()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-primary text-cream hover:bg-stone transition-all shadow-lg active:scale-95">
+                            <span class="material-symbols-outlined">arrow_upward</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- File Attachment Pill Bar -->
+                <div id="attachment-bar" class="hidden flex items-center justify-between bg-charcoal/5 px-3 py-1.5 rounded-xl border border-charcoal/10 mt-2 max-w-xs">
+                    <div class="flex items-center gap-2 text-xs text-stone">
+                        <span class="material-symbols-outlined text-primary text-sm">description</span>
+                        <span id="attached-file-name" class="font-medium truncate max-w-[150px]">file.pdf</span>
+                    </div>
+                    <button onclick="removeAttachment()" class="text-stone hover:text-primary transition-colors flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                </div>
+                <p class="text-center text-[9px] text-stone/30 mt-3 font-label-caps tracking-[0.25em]">QUALM STRESS-TEST ENGINE V.5.0</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SIDEBAR / DRAWER MENU -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-80 bg-cream/95 backdrop-blur-xl border-r border-charcoal/10 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between p-6">
+        <div class="overflow-y-auto flex-1 pr-1 pb-6">
+            <!-- Sidebar Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-2xl">smart_toy</span>
+                    <span class="font-headline-lg text-2xl text-primary font-serif tracking-tight italic">Qualm AI</span>
+                </div>
+                <button onclick="toggleSidebar()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors text-primary">
+                    <span class="material-symbols-outlined text-sm font-bold">close</span>
+                </button>
+            </div>
+
+            <!-- New Session Action -->
+            <button onclick="resetChat()" class="w-full py-3 mb-6 bg-charcoal text-cream font-semibold tracking-wider uppercase text-xs rounded hover:bg-stone transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+                New Stress-Test
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="space-y-1 mb-8">
+                <h3 class="text-[9px] font-bold uppercase tracking-[0.2em] text-stone/50 mb-3 px-2">Navigation</h3>
+                <button onclick="openMemoir()" class="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-charcoal/10 text-stone hover:text-primary rounded transition-colors text-left">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider">Memoir</span>
+                </button>
+                <button onclick="openAnalytics()" class="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-charcoal/10 text-stone hover:text-primary rounded transition-colors text-left">
+                    <span class="material-symbols-outlined">insights</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider">Analytics</span>
+                </button>
+            </div>
+
+            <!-- Recent Sessions Area -->
+            <div>
+                <h3 class="text-[9px] font-bold uppercase tracking-[0.2em] text-stone/50 mb-3 px-2">Recent Stress-Tests</h3>
+                <div id="recent-chats-list" class="space-y-1 max-h-[220px] overflow-y-auto pr-1">
+                    <p class="text-xs text-stone/40 italic px-2">No recent tests.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="border-t border-charcoal/10 pt-6 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-3">
+                <img id="sidebar-avatar" class="w-10 h-10 rounded-full object-cover border border-charcoal/25" src="" alt="User">
+                <div class="truncate max-w-[140px]">
+                    <p id="sidebar-user-name" class="text-sm font-semibold text-charcoal truncate">Guest User</p>
+                    <p id="sidebar-user-email" class="text-xs text-stone truncate">guest@domain.com</p>
+                </div>
+            </div>
+            <button onclick="openSettingsModal(); toggleSidebar();" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-charcoal/10 text-stone hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300"></div>
+
+    <!-- 4. GOOGLE ACCOUNT SETUP CONFIG MODAL -->
+    <div id="google-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div id="google-modal-content" class="bg-cream text-charcoal shadow-2xl w-full max-w-[380px] rounded-2xl p-6 border border-charcoal/10 transform scale-95 transition-all duration-300 animate-in fade-in zoom-in-95 duration-200">
+            <!-- Modal Header -->
+            <div class="flex flex-col items-center mb-6">
+                <!-- Google Logo -->
+                <svg class="w-6 h-6 mb-3" viewBox="0 0 24 24">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+                </svg>
+                <h2 id="google-modal-title" class="text-xl font-semibold text-primary tracking-tight text-center italic font-serif">Sign in with Google</h2>
+                <p id="google-modal-subtitle" class="text-xs text-stone mt-1">to continue to <span class="font-semibold text-primary">Qualm AI</span></p>
+            </div>
+
+            <!-- Loading Spinner container -->
+            <div id="google-loading" class="hidden flex flex-col items-center justify-center py-8">
+                <div class="w-8 h-8 border-4 border-charcoal/20 border-t-charcoal rounded-full animate-spin"></div>
+                <p id="google-loading-text" class="text-xs text-stone mt-4 font-medium">Connecting to Google...</p>
+            </div>
+
+            <!-- Configuration Step (Real Google Setup) -->
+            <div id="google-config-step" class="space-y-6">
+                <div class="space-y-4">
+                    <p class="text-xs text-stone leading-relaxed text-center">
+                        Authenticate directly against Google accounts signed in on this device, or run the local sign-in simulator.
+                    </p>
+                    
+                    <div class="border-t border-charcoal/10 pt-4 space-y-4">
+                        <!-- Option 1: Real OAuth -->
+                        <div class="space-y-2">
+                            <label class="text-[9px] font-semibold text-stone uppercase tracking-wider block" for="google-client-id-input">Google OAuth Client ID</label>
+                            <input id="google-client-id-input" type="text" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 px-0 focus:border-charcoal transition-colors duration-300 text-charcoal placeholder:text-stone/30 text-xs" placeholder="Paste Client ID here..."/>
+                            <p class="text-[9px] text-stone/40 mt-1">Found in GCP API & Services credentials console.</p>
+                        </div>
+                        <button onclick="saveAndLaunchRealGoogleOAuth()" class="w-full py-3.5 bg-charcoal hover:bg-stone text-cream rounded text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="currentColor"></path>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path>
+                            </svg>
+                            Verify Signed-In Google Accounts
+                        </button>
+                    </div>
+
+                    <div class="relative flex items-center py-1">
+                        <div class="flex-grow border-t border-charcoal/10"></div>
+                        <span class="flex-shrink mx-3 text-[9px] font-bold uppercase tracking-[0.2em] text-stone/40">or</span>
+                        <div class="flex-grow border-t border-charcoal/10"></div>
+                    </div>
+
+                    <!-- Option 2: Mock -->
+                    <button onclick="launchSimulatedLogin()" class="w-full py-3.5 border border-charcoal text-charcoal hover:bg-charcoal hover:text-cream rounded text-xs font-semibold transition-colors">
+                        Launch Simulated Login Form
+                    </button>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-charcoal/10 mt-4">
+                    <button type="button" onclick="closeGoogleModal()" class="text-xs font-semibold text-stone hover:text-primary transition-colors">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Step 1: Email Form (Mock) -->
+            <div id="google-email-step" class="space-y-4 hidden">
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-stone" for="google-email-input">Email or phone</label>
+                    <input id="google-email-input" type="email" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 px-0 focus:border-charcoal transition-colors duration-300 text-charcoal placeholder:text-stone/40 text-sm" placeholder="name@company.com" onkeydown="handleGoogleEmailKey(event)"/>
+                    <p id="google-email-error" class="text-xs text-red-500 hidden mt-1">Please enter a valid email address.</p>
+                </div>
+                <div class="text-xs text-primary font-medium hover:underline cursor-pointer">Forgot email?</div>
+                <div class="text-[11px] text-stone/40 leading-relaxed mt-4">
+                    Not your computer? Use Guest mode to sign in privately. <a href="#" class="underline hover:text-primary">Learn more</a>
+                </div>
+                <div class="flex justify-between items-center pt-4">
+                    <button type="button" onclick="showGoogleConfigStep()" class="text-xs font-semibold text-stone hover:text-primary transition-colors">Back</button>
+                    <button type="button" onclick="goToGoogleNameStep()" class="py-2 px-5 bg-charcoal text-cream rounded hover:bg-stone text-xs font-semibold transition-colors">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Name Form (Mock) -->
+            <div id="google-name-step" class="space-y-4 hidden">
+                <!-- User account pill -->
+                <div class="flex items-center gap-2 p-2 rounded border border-charcoal/10 bg-charcoal/5 w-full mb-4">
+                    <span class="material-symbols-outlined text-[16px] text-primary ml-1">account_circle</span>
+                    <span id="google-selected-email-pill" class="text-xs text-stone truncate font-medium">email@domain.com</span>
+                    <button onclick="goBackToGoogleEmailStep()" class="ml-auto mr-1 text-stone hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                    </button>
+                </div>
+                
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-stone" for="google-name-input">Full Name</label>
+                    <input id="google-name-input" type="text" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 px-0 focus:border-charcoal transition-colors duration-300 text-charcoal placeholder:text-stone/40 text-sm" placeholder="John Doe" onkeydown="handleGoogleNameKey(event)"/>
+                    <p id="google-name-error" class="text-xs text-red-500 hidden mt-1">Please enter your name.</p>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-stone" for="google-password-input">Password (Simulated)</label>
+                    <input id="google-password-input" type="password" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 px-0 focus:border-charcoal transition-colors duration-300 text-charcoal placeholder:text-stone/40 text-sm" placeholder="••••••••" onkeydown="handleGoogleNameKey(event)"/>
+                </div>
+                
+                <div class="flex justify-between items-center pt-4">
+                    <button type="button" onclick="goBackToGoogleEmailStep()" class="text-xs font-semibold text-stone hover:text-primary transition-colors">Back</button>
+                    <button type="button" onclick="submitGoogleLogin()" class="py-2 px-5 bg-charcoal text-cream rounded hover:bg-stone text-xs font-semibold transition-colors">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. GENERAL SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div id="settings-modal-content" class="bg-cream text-charcoal shadow-2xl w-full max-w-[420px] rounded-2xl p-6 border border-charcoal/10 transform scale-95 transition-all duration-300 max-h-full overflow-y-auto">
+            <!-- Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-charcoal/10 mb-6">
+                <h2 class="text-xl font-bold tracking-tight text-primary font-serif italic">System Settings</h2>
+                <button onclick="closeSettingsModal()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors text-primary">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <!-- Profile Info Section -->
+            <div class="flex items-center gap-4 bg-surface border border-charcoal/10 rounded-2xl p-4 mb-6">
+                <img id="settings-avatar" class="w-12 h-12 rounded-full object-cover border border-charcoal/20" src="" alt="Avatar">
+                <div>
+                    <h3 id="settings-user-name" class="font-semibold text-charcoal text-base">Alex Woodward</h3>
+                    <p id="settings-user-email" class="text-xs text-stone">alex.woodward@gmail.com</p>
+                    <span id="settings-provider-badge" class="inline-block text-[9px] uppercase tracking-wider font-bold bg-charcoal/15 text-primary border border-charcoal/30 px-2 py-0.5 rounded mt-1">Google Signed-in</span>
+                </div>
+            </div>
+
+            <!-- Form fields -->
+            <div class="space-y-4 mb-8">
+                <!-- Gemini API Key Input -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-semibold uppercase tracking-widest text-stone" for="api-key">Gemini API Key (Optional)</label>
+                        <a href="https://aistudio.google.com/" target="_blank" class="text-xs text-primary hover:underline flex items-center gap-0.5">
+                            Get Key <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <input id="api-key" type="password" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 pr-10 focus:border-primary transition-colors duration-300 text-charcoal placeholder:text-stone/30 text-sm" placeholder="Leave empty to use Server Groq..."/>
+                        <button onclick="toggleApiKeyVisibility()" class="absolute right-0 top-1/2 -translate-y-1/2 text-stone/50 hover:text-primary transition-colors">
+                            <span id="api-key-visibility-icon" class="material-symbols-outlined text-[20px]">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Google OAuth Client ID Input -->
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase tracking-widest text-stone" for="google-client-id">Google Client ID (Optional)</label>
+                    <input id="google-client-id" type="text" class="w-full bg-transparent border-0 border-b border-charcoal/20 py-2.5 px-0 focus:border-primary transition-colors duration-300 text-charcoal text-sm placeholder:text-stone/30" placeholder="xxxx-xxxx.apps.googleusercontent.com"/>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3">
+                <button onclick="handleLogOut()" class="flex-grow py-3 border border-red-950/20 text-red-600 font-semibold text-sm rounded hover:bg-red-950/5 transition-colors flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                    Sign Out
+                </button>
+                <button onclick="saveSettings()" class="flex-grow py-3 bg-charcoal text-cream font-semibold text-sm rounded hover:bg-stone transition-colors flex items-center justify-center gap-2 shadow-lg">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 glass-panel border-charcoal/10 py-3 px-6 rounded shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2 bg-cream/90">
+        <span id="toast-icon" class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+        <span id="toast-message" class="text-xs font-semibold text-charcoal">Settings updated successfully</span>
+    </div>
+
+    <!-- Main Client JS -->
+    <script src="app.js"></script>
+</body>
+</html>

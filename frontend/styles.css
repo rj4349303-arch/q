@@ -1,0 +1,117 @@
+/* General Theme Base */
+body {
+    background-color: #FDFCF0;
+    color: #1A1A1A;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Force form controls and buttons to inherit fonts */
+input, select, textarea, button {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.serif-heading {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Glassmorphism Panel styles (Cream light-mode glass) */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Button & interactive transitions */
+.btn-transition {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    border-color: #1A1A1A !important;
+    box-shadow: 0 0 10px rgba(26, 26, 26, 0.05) !important;
+    ring: 0 !important;
+}
+
+/* Custom scrollbars matching the cream/charcoal theme */
+.chat-container::-webkit-scrollbar,
+div::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-container::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+    background: rgba(26, 26, 26, 0.1);
+    border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover,
+div::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 26, 26, 0.25);
+}
+
+/* Animations */
+.animate-pulse-subtle {
+    animation: pulseSubtle 2s infinite ease-in-out;
+}
+
+@keyframes pulseSubtle {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(26, 26, 26, 0.08);
+    }
+}
+
+/* Custom Range Input Styling in Muted Colors */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #E5E4D7;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #1A1A1A;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(26, 26, 26, 0.2);
+    transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Print/Stress Report Optimization */
+@media print {
+    body {
+        background: #ffffff;
+        color: #000000;
+    }
+    .glass-panel {
+        border: 1px solid #cccccc;
+        box-shadow: none;
+        background: #ffffff;
+        color: #000000;
+    }
+    .fixed, header, footer, #sidebar, #sidebar-overlay {
+        display: none !important;
+    }
+}
