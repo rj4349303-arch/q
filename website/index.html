@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Qualm AI — Premium Conversational Intelligence</title>
+    <meta name="description" content="Welcome to Qualm AI. The premium conversational intelligence that thinks before it acts. Engineered for deep research and strategic clarity." />
+    
+    <!-- Premium Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+
+    <!-- Background Glassmorphic Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Fine grid overlay texture -->
+    <div class="grid-overlay"></div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <span class="material-symbols-outlined logo-icon">smart_toy</span>
+                <span class="serif-heading logo-text">Qualm <span class="premium-italic">AI</span></span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#features" class="nav-link label-caps">Features</a>
+                <a href="#technology" class="nav-link label-caps">Technology</a>
+                <a href="#security" class="nav-link label-caps">Security</a>
+                <a href="#about" class="nav-link label-caps">About</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="/" class="btn btn-secondary">
+                    <span>Login</span>
+                </a>
+                <button onclick="openDownloadModal()" class="btn btn-primary">
+                    <span>Download App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Split Section -->
+    <main class="main-hero">
+        <div class="hero-container">
+            
+            <!-- Left Side Content -->
+            <section class="hero-content">
+                <div class="tagline-badge">
+                    <span class="tagline-dot"></span>
+                    <span class="label-caps" style="font-size: 0.65rem; color: var(--color-stone);">Introducing Qualm AI</span>
+                </div>
+                
+                <h1 class="serif-heading hero-title">
+                     <span class="accent">Intellectual Discourse.</span>
+                    <span class="accent">Elevated.</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Qualm AI is the premium conversational partner that thinks before it speaks. Crafted with precision for strategic logic, meticulous research, and contextual clarity, it empowers you to navigate complex decisions with ease.
+                </p>
+                
+                <div class="hero-cta">
+                    <a href="/" class="btn btn-primary" id="btn-try-free">
+                        <span>Try for Free</span>
+                        <span class="material-symbols-outlined btn-icon">arrow_forward</span>
+                    </a>
+                    <button onclick="openDownloadModal()" class="btn btn-secondary" id="btn-download">
+                        <span class="material-symbols-outlined btn-icon">download</span>
+                        <span>Download Desktop</span>
+                    </button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">0.1s</span>
+                        <span class="stat-label">Response Latency</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Discourse Accuracy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100k+</span>
+                        <span class="stat-label">Decisions Refined</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Right Side Visual / Video Panel -->
+            <section class="hero-visual">
+                <div class="visual-glow"></div>
+                <div class="video-frame-outer">
+                    <div class="video-container">
+                        <!-- Looping Abstract Video -->
+                        <video id="hero-video" class="video-element" autoplay loop muted playsinline>
+                            <source src="Untitled%20design.mp4" type="video/mp4">
+                            <!-- Backup sources in JS in case local load fails -->
+                        </video>
+                        
+                        <div class="video-overlay-tint"></div>
+                        
+                        <!-- HUD Panel overlays -->
+                        <div class="video-hud">
+                            <div class="hud-top">
+                                <div class="hud-badge">
+                                    <span class="hud-badge-dot"></span>
+                                    <span>QUALM SYSTEM LIVE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="content-section">
+        <div class="section-header">
+            <span class="label-caps" style="color: var(--color-stone); font-size: 0.7rem; letter-spacing: 0.2em;">Platform Capabilities</span>
+            <h2 class="serif-heading section-title">Refining raw data into strategic clarity.</h2>
+            <p class="section-subtitle">Qualm AI is engineered with features that support deep logic, thorough verification, and advanced simulation for strategic execution.</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card glass-panel">
+                <div class="feature-icon-wrapper">
+                    <span class="material-symbols-outlined feature-icon">psychology</span>
+                </div>
+                <h3 class="feature-title">Reasoning Loops</h3>
+                <p class="feature-desc">Rather than generating immediate word-by-word predictions, Qualm loops its logical model through validation passes to critique, self-correct, and outline its analytical steps before presenting answers.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card glass-panel">
+                <div class="feature-icon-wrapper">
+                    <span class="material-symbols-outlined feature-icon">history_edu</span>
+                </div>
+                <h3 class="feature-title">Memoir Synthesis</h3>
+                <p class="feature-desc">Active contextual storage saves key insights and strategic directions into a secure browser memoir, maintaining continuity across complex development timelines and intellectual discourses.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card glass-panel">
+                <div class="feature-icon-wrapper">
+                    <span class="material-symbols-outlined feature-icon">experiment</span>
+                </div>
+                <h3 class="feature-title">Decision Simulations</h3>
+                <p class="feature-desc">Test commercial concepts and hypotheses under simulated stress. Model regional market responses, logistic constraints, and resource allocation spikes to isolate structural failures early.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card glass-panel">
+                <div class="feature-icon-wrapper">
+                    <span class="material-symbols-outlined feature-icon">description</span>
+                </div>
+                <h3 class="feature-title">Meticulous Synthesis</h3>
+                <p class="feature-desc">Attach complex files, corporate reports, or database extracts. Qualm digests structural tables, reads document matrices, and parses details with citation-backed accuracy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="content-section">
+        <div class="section-header">
+            <span class="label-caps" style="color: var(--color-stone); font-size: 0.7rem; letter-spacing: 0.2em;">Under The Hood</span>
+            <h2 class="serif-heading section-title">Architected for deep intelligence.</h2>
+            <p class="section-subtitle">A synthesis of frontier AI engineering and client-side privacy, optimized for low latency and high analytic yield.</p>
+        </div>
+
+        <div class="tech-container">
+            <!-- Left: Pipeline Steps -->
+            <div class="tech-pipeline">
+                <div class="pipeline-step">
+                    <span class="step-num">01</span>
+                    <div class="step-content">
+                        <h4 class="step-title">Analytical Deconstruction</h4>
+                        <p class="step-desc">Prompts are broken down into logical parameters, reference anchors, and semantic nodes to map the entire scope of inquiry before execution begins.</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="step-num">02</span>
+                    <div class="step-content">
+                        <h4 class="step-title">Self-Critique Cycle</h4>
+                        <p class="step-desc">Qualm spins up autonomous sub-threads to analyze its initial hypothesis, check logic anomalies, and query baseline datasets for hidden variables.</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="step-num">03</span>
+                    <div class="step-content">
+                        <h4 class="step-title">Response Optimization</h4>
+                        <p class="step-desc">The finalized analytical outputs are structured using clean styling tokens, formatting schemas, and semantic typography to produce a highly readable outline.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Specs Sheet Card -->
+            <div class="tech-visual-card glass-panel">
+                <div class="tagline-badge" style="align-self: flex-start; background: rgba(26,26,26,0.03); margin-top: 0;">
+                    <span class="tagline-dot" style="background-color: var(--color-accent-blue); box-shadow: 0 0 8px var(--color-accent-blue);"></span>
+                    <span class="label-caps" style="font-size: 0.6rem; color: var(--color-stone);">Model Specs</span>
+                </div>
+                <h3 class="serif-heading" style="font-size: 2.2rem; line-height: 1.2;">System Performance Matrix</h3>
+                
+                <div class="tech-spec-row">
+                    <span class="tech-spec-label">LLM Engine</span>
+                    <span class="tech-spec-val">Gemini 2.5 Pro & Flash</span>
+                </div>
+                <div class="tech-spec-row">
+                    <span class="tech-spec-label">Context Limit</span>
+                    <span class="tech-spec-val">Up to 2M Tokens</span>
+                </div>
+                <div class="tech-spec-row">
+                    <span class="tech-spec-label">Execution Architecture</span>
+                    <span class="tech-spec-val">Direct API / Client-Side Cache</span>
+                </div>
+                <div class="tech-spec-row">
+                    <span class="tech-spec-label">Security Layer</span>
+                    <span class="tech-spec-val">Private OAuth2 / Local Memoirs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section id="security" class="content-section">
+        <div class="section-header">
+            <span class="label-caps" style="color: var(--color-stone); font-size: 0.7rem; letter-spacing: 0.2em;">Privacy Controls</span>
+            <h2 class="serif-heading section-title">Your data is yours. End of story.</h2>
+            <p class="section-subtitle">Qualm is designed to enforce maximum privacy. We do not store your intellectual secrets or strategic plans on proprietary database clouds.</p>
+        </div>
+
+        <div class="security-grid">
+            <div class="security-card glass-panel">
+                <span class="material-symbols-outlined security-icon">encrypted</span>
+                <h3 class="security-title">Zero Data Training</h3>
+                <p class="security-desc">Prompts are routed directly to the Gemini API endpoint using your custom keys. Your interactions are never used to train public models or refine commercial tools.</p>
+            </div>
+
+            <div class="security-card glass-panel">
+                <span class="material-symbols-outlined security-icon">shield</span>
+                <h3 class="security-title">Local Cryptography</h3>
+                <p class="security-desc">All chat logs, local settings, API configurations, and user memoirs are cached entirely in your browser's private localStorage. Delete them instantly at any time.</p>
+            </div>
+
+            <div class="security-card glass-panel">
+                <span class="material-symbols-outlined security-icon">lock_open</span>
+                <h3 class="security-title">Secure OAuth</h3>
+                <p class="security-desc">Authenticate safely through official Google Cloud OAuth integrations. No credentials are saved in external data sheets, ensuring safe, direct desktop logins.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="content-section">
+        <div class="about-container">
+            <span class="label-caps" style="color: var(--color-stone); font-size: 0.7rem; letter-spacing: 0.2em;">Our Ethos</span>
+            <h2 class="about-quote">"Quiet intelligence, born from deliberate reflection."</h2>
+            <p class="about-text">
+                Qualm AI was created for users who require strategic accuracy over prompt speed. Rather than matching conversational velocity with quick, generalized answers, Qualm pauses to evaluate logical steps, isolate assumptions, and stress-test strategic variables. We believe that critical decision-making demands an AI that thinks before it acts.
+            </p>
+            <div class="tagline-badge" style="background: rgba(255,255,255,0.7); margin-top: 0;">
+                <span class="tagline-dot" style="background-color: var(--color-accent-purple);"></span>
+                <span class="label-caps" style="font-size: 0.65rem; color: var(--color-stone);">Engineered for clarity</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <span class="material-symbols-outlined logo-icon">smart_toy</span>
+                        <span class="serif-heading logo-text">Qualm <span class="premium-italic">AI</span></span>
+                    </a>
+                    <p class="footer-desc">Premium conversational intelligence. Supporting logical analysis, strategic simulation, and meticulous documentation with absolute security.</p>
+                </div>
+                
+                <div class="footer-links-col">
+                    <span class="footer-col-title">Navigation</span>
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#technology" class="footer-link">Technology</a>
+                    <a href="#security" class="footer-link">Security</a>
+                    <a href="#about" class="footer-link">About Us</a>
+                </div>
+
+                <div class="footer-links-col">
+                    <span class="footer-col-title">Platform</span>
+                    <a href="/" class="footer-link">Launch Web Client</a>
+                    <a href="#" onclick="openDownloadModal(); return false;" class="footer-link">Download App</a>
+                    <a href="qualm_ai_documentation.pdf" download class="footer-link">Download Documentation (PDF)</a>
+                    <a href="https://aistudio.google.com" target="_blank" class="footer-link">Gemini AI Studio</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 Qualm AI. Engineered for strategic clarity and absolute privacy.</span>
+                <div class="footer-meta-links">
+                    <a href="#" class="footer-meta-link">Privacy Policy</a>
+                    <a href="#" class="footer-meta-link">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Glassmorphic Download Modal -->
+    <div class="modal-overlay" id="download-modal" onclick="handleOverlayClick(event)">
+        <div class="modal-content">
+            <button onclick="closeDownloadModal()" class="modal-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <div class="modal-header">
+                <h2 class="modal-title">Get Qualm AI</h2>
+                <p class="modal-subtitle">Choose your preferred client to experience intelligent discourse.</p>
+            </div>
+            
+            <div class="os-grid">
+                <!-- Recommended/Auto OS Card (e.g. Windows) -->
+                <a class="os-card desktop-primary" onclick="simulateDownload('Windows Desktop Client')">
+                    <div class="os-info">
+                        <span class="material-symbols-outlined os-icon">desktop_windows</span>
+                        <div>
+                            <div class="os-name">Windows Application</div>
+                            <div class="os-version">v2.4.1 • setup.exe</div>
+                        </div>
+                    </div>
+                    <span class="os-badge">Default</span>
+                </a>
+                
+                <!-- macOS Card -->
+                <a class="os-card" onclick="simulateDownload('macOS Desktop Client')">
+                    <span class="material-symbols-outlined os-icon">desktop_mac</span>
+                    <div class="os-name">macOS Client</div>
+                    <div class="os-version">v2.4.1 • dmg</div>
+                </a>
+                
+                <!-- Linux Card -->
+                <a class="os-card" onclick="simulateDownload('Linux Desktop Client')">
+                    <span class="material-symbols-outlined os-icon">terminal</span>
+                    <div class="os-name">Linux Client</div>
+                    <div class="os-version">v2.4.1 • deb/rpm</div>
+                </a>
+                
+                <!-- iOS Card -->
+                <a class="os-card" onclick="simulateDownload('iOS Mobile App')">
+                    <span class="material-symbols-outlined os-icon">phone_iphone</span>
+                    <div class="os-name">iOS App</div>
+                    <div class="os-version">App Store</div>
+                </a>
+                
+                <!-- Android Card -->
+                <a class="os-card" onclick="openAndroidModal()">
+                    <span class="material-symbols-outlined os-icon">phone_android</span>
+                    <div class="os-name">Android App</div>
+                    <div class="os-version">Google Play</div>
+                </a>
+            </div>
+            
+            <div class="modal-footer">
+                Need enterprise solutions? <a href="mailto:enterprise@qualm.ai">Contact our team</a>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Android App QR Modal -->
+    <div class="modal-overlay" id="android-modal" onclick="handleAndroidOverlayClick(event)">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <button onclick="closeAndroidModal()" class="modal-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <div class="modal-header" style="margin-bottom: 1.5rem;">
+                <h2 class="modal-title" style="font-size: 2.2rem;">Install Android App</h2>
+                <p class="modal-subtitle">Scan the QR code with your mobile device or copy the link below.</p>
+            </div>
+            
+            <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+                <div style="padding: 1rem; background: var(--color-cream); border: 1px solid var(--glass-border); border-radius: 20px; box-shadow: var(--glass-shadow); display: inline-flex;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=https://appsgeyser.io/19958856/Qualm&amp;color=1a1a1a&amp;bgcolor=fdfcf0" alt="Qualm Android QR Code" style="width: 180px; height: 180px; display: block;" />
+                </div>
+            </div>
+            
+            <!-- Link Copy Box -->
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center; width: 100%;">
+                <div onclick="copyAndroidLink()" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.8rem 1.2rem; background: rgba(26, 26, 26, 0.03); border: 1px solid rgba(26, 26, 26, 0.08); border-radius: 12px; cursor: pointer; transition: all 0.3s ease;" id="link-copy-box">
+                    <span style="font-size: 0.85rem; color: var(--color-stone); font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 80%;" id="android-link-text">https://appsgeyser.io/19958856/Qualm</span>
+                    <span class="material-symbols-outlined" style="font-size: 1.2rem; color: var(--color-charcoal);" id="copy-icon">content_copy</span>
+                </div>
+                <p id="copy-status" style="font-size: 0.75rem; color: #52e590; font-weight: 600; opacity: 0; transition: opacity 0.3s ease; margin-bottom: 0;">Link copied to clipboard</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Javascript Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
